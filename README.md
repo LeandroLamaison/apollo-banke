@@ -5,7 +5,7 @@ Desenvolvida durante a cadeira de "Programação Científica", do curso de "Aná
 
 A aplicação será uma simulação de um sistema bancária, que permite transações entre usuários e transações interbancárias.
 
-Time de Desevolvimento: Eduardo Garcia, Eduardo Almeida, Carlos Eduardo e Leandro Almeida
+Time de Desevolvimento: Eduardo Garcia, Eduardo Almeida, Carlos Eduardo e Leandro Almeida;
 
 
 Comandos úteis, GITHUB
