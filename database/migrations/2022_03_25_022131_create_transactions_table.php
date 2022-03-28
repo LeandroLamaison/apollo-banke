@@ -13,10 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('messages', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->text('text');
+            $table->integer('account_id');
+            $table->float('value');
+            $table->enum('type', ['withdrawal', 'deposit']);
+
+            $table
+                ->foreign('account_id')
+                ->references('id')
+                ->on('accounts')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 
@@ -27,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('messages');
+        Schema::dropIfExists('transactions');
     }
 };
