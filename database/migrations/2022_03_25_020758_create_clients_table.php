@@ -16,10 +16,13 @@ return new class extends Migration
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->integer('user_id');
-            $table->char('cpf', 11);
+            $table->integer('user_id')->unique();
+            $table->char('cpf', 11)->unique();
             $table->date('birth_date');
             $table->string('name');
+            $table->string('cellphone');
+            $table->string('city');
+            $table->char('uf', 2);
 
             $table
                 ->foreign('user_id')
