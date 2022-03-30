@@ -2,6 +2,7 @@
 
 return [
 
+    'create_account'              => 'Criar conta',
     'full_name'                   => 'Nome completo',
     'email'                       => 'Email',
     'password'                    => 'Senha',

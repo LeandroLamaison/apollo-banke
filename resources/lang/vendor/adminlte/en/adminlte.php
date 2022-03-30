@@ -2,6 +2,7 @@
 
 return [
 
+    'create_account'              => 'Create account',
     'full_name'                   => 'Full name',
     'email'                       => 'Email',
     'password'                    => 'Password',
