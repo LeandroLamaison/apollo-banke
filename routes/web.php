@@ -20,9 +20,9 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+})->middleware(['auth', 'client'])->name('dashboard');
 
-Route::get('/add-client', [ClientController::class, 'create']) -> middleware(['auth'])->name('add-client');
-Route::post('/add-client', [ClientController::class, 'store']) -> middleware(['auth'])->name('add-client');
+Route::get('/client', [ClientController::class, 'create']) -> middleware(['auth'])->name('client');
+Route::post('/client', [ClientController::class, 'store']) -> middleware(['auth'])->name('client');
 
 require __DIR__.'/auth.php';
