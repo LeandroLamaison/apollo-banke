@@ -13,7 +13,7 @@
         <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-        <form>
+        <form method="post">
             @csrf
 
             <!-- Name -->
@@ -41,20 +41,20 @@
                     :value="old('cpf')" 
                     required 
                     autofocus
-                    placeholder="XXX.XXX.XXX-XX"
-                    pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}" 
+                    minlength="11"
+                    maxlength="11"
                 />
             </div>
 
             <!-- Phone -->
             <div class="mt-4">
-                <x-label for="phone" :value="__('main.phone')" />
+                <x-label for="cellphone" :value="__('main.cellphone')" />
                 <x-input 
-                    id="phone" 
+                    id="cellphone" 
                     class="block mt-1 w-full" 
                     type="text" 
-                    name="phone" 
-                    :value="old('phone')" 
+                    name="cellphone" 
+                    :value="old('cellphone')" 
                     required 
                     autofocus
                     minlength="13"
