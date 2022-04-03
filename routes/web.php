@@ -21,4 +21,8 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+Route::get('/add-client', function () {
+    return view('add-client-info');
+}) -> middleware(['auth'])->name('add-client');
+
 require __DIR__.'/auth.php';
