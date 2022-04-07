@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -17,11 +18,11 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->integer('user_id')->unique();
-            $table->integer('card_number')->unique();
+            $table->string('card_number')->unique();
             $table->char('security_code', 3);
             $table->date('due_date');
-            $table->date('creation_date');
-            $table->float('balance');
+            $table->date('creation_date')->default(DB::raw('CURRENT_DATE'));
+            $table->float('balance')->default(0);
 
             $table
                 ->foreign('user_id')
