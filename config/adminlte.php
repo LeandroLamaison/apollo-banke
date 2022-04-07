@@ -249,9 +249,9 @@ return [
         // ],
         // ['header' => 'account_settings'],
         [
-            'text' => 'profile',
+            'text' => 'Home',
             'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
+            'icon' => 'fas fa-fw fa-area-chart',
         ],
         [
             'text' => 'change_password',
@@ -259,29 +259,29 @@ return [
             'icon' => 'fas fa-fw fa-lock',
         ],
         [
-            'text'    => 'transactions',
+            'text'    => 'Transações',
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
                 [
-                    'text' => 'withdraw',
+                    'text' => 'Saque',
                     'url'  => '#',
                 ],
                 [
-                    'text' => 'deposit',
+                    'text' => 'Depósito',
                     'url'  => '#',
                 ],
                 [
-                    'text' => 'transfer',
+                    'text' => 'Transferência',
                     'url'  => '#',
                 ],
             ],
         ],
         [
-            'text'    => 'history',
+            'text'    => 'Histórico',
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
                 [
-                    'text' => 'extract',
+                    'text' => 'Extrato',
                     'url'  => '#',
                 ]
             ],
