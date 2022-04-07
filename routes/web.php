@@ -18,10 +18,7 @@ Route::get('/', function () {
     return redirect('/dashboard');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'client'])->name('dashboard');
-
+Route::get('/dashboard', [ClientController::class, 'view'])->middleware(['auth', 'client'])->name('dashboard');
 Route::get('/client', [ClientController::class, 'create']) -> middleware(['auth'])->name('client');
 Route::post('/client', [ClientController::class, 'store']) -> middleware(['auth'])->name('client');
 
