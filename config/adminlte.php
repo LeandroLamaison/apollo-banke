@@ -127,7 +127,7 @@ return [
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
     'classes_content' => '',
-    'classes_sidebar' => 'sidebar-dark-primary elevation-4',
+    'classes_sidebar' => 'bg-navy elevation-4',
     'classes_sidebar_nav' => '',
     'classes_topnav' => 'navbar-white navbar-light',
     'classes_topnav_nav' => 'navbar-expand',
@@ -249,39 +249,48 @@ return [
         // ],
         // ['header' => 'account_settings'],
         [
+           
             'text' => 'Home',
+            'classes' => 'text-white',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-area-chart',
         ],
         [
             'text' => 'change_password',
+            'classes' => 'text-white',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-lock',
         ],
         [
             'text'    => 'Transações',
+            'classes' => 'text-white',
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
                 [
                     'text' => 'Saque',
+                    'classes' => 'text-white',
                     'url'  => '#',
                 ],
                 [
                     'text' => 'Depósito',
+                    'classes' => 'text-white',
                     'url'  => '#',
                 ],
                 [
                     'text' => 'Transferência',
+                    'classes' => 'text-white',
                     'url'  => '#',
                 ],
             ],
         ],
         [
             'text'    => 'Histórico',
+            'classes' => 'text-white',
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
                 [
                     'text' => 'Extrato',
+                    'classes' => 'text-white',
                     'url'  => '#',
                 ]
             ],
