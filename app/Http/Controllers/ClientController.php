@@ -30,11 +30,12 @@ function getDueDate () {
 class ClientController extends Controller
 {
     public function view () {
-        $userId = Auth::id();
-        $client = Client::where('user_id', $userId)->first();
-        $account = Account::where('user_id', $userId)->first();
+        $user = Auth::user();
+        $client = Client::where('user_id', $user->id)->first();
+        $account = Account::where('user_id', $user->id)->first();
 
         $data = [
+            'user' => $user,
             'client' => $client,
             'account' =>$account,
         ];
