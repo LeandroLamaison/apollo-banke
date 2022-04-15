@@ -6,27 +6,10 @@ use App\Models\Account;
 use App\Models\Client;
 use App\Rules\CPF;
 use App\Rules\UF;
+use App\Services\AccountService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
-function generateCardNumber (string $cpf) {
-    $cardPrefix = config('constants.apollo.card_prefix');
-    $part1 = substr($cpf, 0, 3);
-    $part2 = substr($cpf, 3, 3);
-    $part3 = substr($cpf, 6, 3);
-    return $cardPrefix . $part1 + 1000 . $part2 + 2000 . $part3 + 3000;
-}
-
-function generateSecurityCode () {
-    return rand(0, 9) . rand(0, 9) . rand(0, 9);
-}
-
-function getDueDate () {
-    $timestamp = strtotime('+2 years');
-    return date('d-m-y', $timestamp);
-}
-
 class ClientController extends Controller
 {
     public function view () {
@@ -67,9 +50,7 @@ class ClientController extends Controller
         $form = $request->all();
         $userId = Auth::id();
 
-        $cardNumber = generateCardNumber($form['cpf'], $userId);
-        $securityCode = generateSecurityCode();
-        $dueDate = getDueDate();
+        $newAccount = AccountService::create($form['cpf']);
 
         DB::beginTransaction();
         try {
@@ -85,9 +66,9 @@ class ClientController extends Controller
     
             Account::create([
                 'user_id' => $userId,
-                'card_number' => $cardNumber,
-                'security_code' => $securityCode,
-                'due_date' => $dueDate,
+                'card_number' => $newAccount['card_number'],
+                'security_code' => $newAccount['security_code'],
+                'due_date' => $newAccount['due_date'],
             ]);
 
             DB::commit();
