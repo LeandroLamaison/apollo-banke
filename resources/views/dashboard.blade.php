@@ -3,15 +3,15 @@
 @section('title', 'Apollo Banke')
 
 @section('content_header')
-    <h1>Dashboard</h1>
+    <h1>{{ __('main.dashboard') }}</h1>
 @stop
 
 @section('content')
-    <h4>Bem vindo, {{$data['user']['name']}}</h4>
+    <h4>{{ __('main.welcome', ['name' => $data['user']['name']]) }}</h4>
 
     <x-adminlte-card 
         class="mt-5 text-xl text-center"
-        title="Saldo Disponível" 
+        title="{{ __('account.available_balance') }}" 
         theme="lightblue" 
         theme-mode="outline"
         icon="fas fa-lg fa-solid fa-money-bill" 
@@ -22,7 +22,7 @@
 
     <x-adminlte-card 
         class="mt-5 grid"
-        title="Conta" 
+        title="{{ __('account.account') }}" 
         theme="lightblue" 
         theme-mode="outline"
         icon="fas fa-lg fa-solid fa-user" 
@@ -30,20 +30,20 @@
     >   
         <div class="mt-0 col-center text-center">
             <span class="block">
-                Número do Cartão
+               {{ __('account.card_number') }}
             </span>
             <span class="text-xl">
                 {{ $data['account']['card_number'] }}
             </span>
         </div>
         <div class="mt-4 col-start text-center">
-            <b class="block">Membro desde</b> {{$data['account']['creation_date']}}
+            <b class="block">{{ __('account.member_since') }}</b> {{$data['account']['creation_date']}}
         </div>
         <div class="mt-4 col-center text-center">
-            <b class="block">Validade</b> {{$data['account']['due_date']}}
+            <b class="block">{{ __('account.due_date') }}</b> {{$data['account']['due_date']}}
         </div>
         <div class="mt-4 col-end text-center">
-            <b class="block">CVV</b> {{$data['account']['security_code']}}
+            <b class="block">{{ __('account.security_code') }}</b> {{$data['account']['security_code']}}
         </div>
     </x-adminlte-card>
 

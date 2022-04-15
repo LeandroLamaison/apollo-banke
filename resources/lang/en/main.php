@@ -8,7 +8,9 @@ return [
     'cellphone' => 'Phone Number',
     'birth_date' => 'Birth Date',
     'city' => 'City',
-    'uf' => "UF"
+    'uf' => "UF",
+    'dashboard' => 'Dashboard',
+    'welcome' => 'Welcome, :name',
 ]
 
 ?>
