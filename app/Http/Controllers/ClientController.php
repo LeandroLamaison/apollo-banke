@@ -14,13 +14,11 @@ class ClientController extends Controller
 {
     public function view () {
         $user = Auth::user();
-        $client = Client::where('user_id', $user->id)->first();
         $account = Account::where('user_id', $user->id)->first();
 
         $data = [
             'user' => $user,
-            'client' => $client,
-            'account' =>$account,
+            'account' => AccountService::format($account),
         ];
         
         return view('dashboard', ['data' => $data]);
