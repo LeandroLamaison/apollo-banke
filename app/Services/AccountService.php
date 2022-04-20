@@ -24,6 +24,18 @@ class AccountService {
         return date('d-m-y', $timestamp);
     }
 
+    static public function balance(float $oldBalance, float $value, string $transactionType) {
+        if($transactionType === 'deposit') {
+            return $oldBalance + $value;
+        }
+
+        if($transactionType === 'withdrawal') {
+            return $oldBalance - $value;
+        }
+
+        return $oldBalance;
+    }
+
     static public function create (string $cpf) {
         return [
             'card_number' => AccountService::createCardNumber($cpf),
