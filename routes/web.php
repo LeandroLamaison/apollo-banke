@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,7 +20,11 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', [ClientController::class, 'view'])->middleware(['auth', 'client'])->name('dashboard');
+
 Route::get('/client', [ClientController::class, 'create']) -> middleware(['auth'])->name('client');
 Route::post('/client', [ClientController::class, 'store']) -> middleware(['auth'])->name('client');
+
+Route::get('transaction/{type}', [TransactionController::class, 'create'])->middleware(['auth'])->name('transaction');
+Route::post('transaction/{type}', [TransactionController::class, 'store'])->middleware(['auth'])->name('transaction');
 
 require __DIR__.'/auth.php';
