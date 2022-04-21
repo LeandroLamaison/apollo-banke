@@ -8,15 +8,18 @@
 
 @section('content')
     <x-guest-layout>
-        <x-auth-card>
+
+        <x-auth-card class="mt-0">
             <x-slot name="logo" >
                 <!-- The use of this slot is required by the component -->
             </x-slot>
+            <x-balance-card :balance="$data['account']['balance']" />
+
 
             <!-- Validation Errors -->
             <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-            <form method="post">
+            <form method="post" class="mt-8">
                 @csrf
 
                 <!-- Type -->
