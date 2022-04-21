@@ -3,7 +3,7 @@
 @section('title', 'Apollo Banke')
 
 @section('content_header')
-    <h1>{{ __('transaction.add_' . $data['type']) }}</h1>
+    <h1>{{ __('transaction.add_transfer') }}</h1>
 @stop
 
 @section('content')
@@ -22,28 +22,35 @@
             <form method="post" class="mt-8">
                 @csrf
 
-                <!-- Type -->
-                <x-input 
-                    id="type"
-                    hidden 
-                    type="hidden" 
-                    step="0.01"
-                    name="type" 
-                    :value="$data['type']" 
-                    required 
-                    autofocus
-                    autocomplete="off" 
-                />
+                <!-- User -->
+                <div>
+                    <x-label for="user" :value="__('transaction.transfer_to')" />
+                    <x-select 
+                        id="user"
+                        name="user"
+                        class="block mt-1 w-full"
+                        :value="-1"
+                        required
+                    >
+                        @if (count($data['clients']) > 0)
+                            @for ($i = 0; $i < count($data['clients']); $i++)
+                                <option value="{{ $data['clients'][$i]['user_id'] }}">
+                                    {{ $data['clients'][$i]['name'] }}
+                                </option>
+                            @endfor
+                        @endif
+                    </x-select>
+                </div>
 
                 <!-- Name -->
-                <div>
+                <div class="mt-6">
                     <x-label for="value" :value="__('transaction.value')" />
                     <x-input 
                         id="value" 
+                        name="value" 
                         class="block mt-1 w-full" 
                         type="number" 
                         step="0.01"
-                        name="value" 
                         required 
                         autofocus
                         autocomplete="off" 
@@ -52,7 +59,7 @@
 
                 <div class="flex items-center justify-center mt-8">
                     <x-button class="ml-4">
-                    {{ __('transaction.add_' . $data['type']) }}
+                        {{ __('transaction.add_transfer') }}
                     </x-button>
                 </div>
             </form>

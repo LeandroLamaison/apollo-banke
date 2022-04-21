@@ -13,17 +13,22 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('transfers', function (Blueprint $table) {
+        Schema::create('internal_transfers', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->integer('account_id');
-            $table->string('bank');
-            $table->integer('user_id');
+            $table->integer('sender_account_id');
+            $table->integer('recipient_account_id');
             $table->float('value');
-            $table->enum('type', ['withdrawal', 'deposit']);
 
             $table
-                ->foreign('account_id')
+                ->foreign('sender_account_id')
+                ->references('id')
+                ->on('accounts')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table
+                ->foreign('recipient_account_id')
                 ->references('id')
                 ->on('accounts')
                 ->onUpdate('cascade')
@@ -38,6 +43,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transfers');
+        Schema::dropIfExists('internal_transfers');
     }
 };

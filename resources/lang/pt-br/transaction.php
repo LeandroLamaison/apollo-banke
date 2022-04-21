@@ -5,7 +5,8 @@ return [
     'add_deposit' => 'Fazer Depósito',
     'add_withdrawal' => 'Fazer Saque',
     'add_transfer' => 'Fazer Transferência',
-    'value' => 'Valor'
+    'value' => 'Valor',
+    'transfer_to' => 'Transferir Para'
 ]
 
 ?>

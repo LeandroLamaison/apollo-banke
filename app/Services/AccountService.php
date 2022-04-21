@@ -7,7 +7,8 @@ class AccountService {
         $part1 = substr($cpf, 0, 3);
         $part2 = substr($cpf, 3, 3);
         $part3 = substr($cpf, 6, 3);
-        return $cardPrefix . $part1 + 1000 . $part2 + 2000 . $part3 + 3000;
+        $part4 = substr($cpf, 9, 2);
+        return $cardPrefix . $part1 + 1000 . $part2 + 2000 . $part3 + $part4 + 3000;
     }
         
     static private function createSecurityCode () {

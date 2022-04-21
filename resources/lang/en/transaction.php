@@ -5,7 +5,8 @@ return [
     'add_deposit' => 'Deposit Money',
     'add_withdrawal' => 'Withdraw Money',
     'add_transfer' => 'Transfer Money',
-    'value' => 'Value'
+    'value' => 'Value',
+    'transfer_to' => 'Transfer To'
 ]
 
 ?>

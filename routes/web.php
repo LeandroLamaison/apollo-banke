@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\InternalTransferController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,5 +27,7 @@ Route::post('/client', [ClientController::class, 'store']) -> middleware(['auth'
 
 Route::get('transaction/{type}', [TransactionController::class, 'create'])->middleware(['auth'])->name('transaction');
 Route::post('transaction/{type}', [TransactionController::class, 'store'])->middleware(['auth'])->name('transaction');
+
+Route::get('transfers', [InternalTransferController::class, 'create'])->middleware(['auth'])->name('transfer');
 
 require __DIR__.'/auth.php';
