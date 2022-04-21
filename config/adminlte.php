@@ -229,27 +229,6 @@ return [
             'type'         => 'fullscreen-widget',
             'topnav_right' => true,
         ],
-
-        // Sidebar items:
-        // [
-        //     'type' => 'sidebar-menu-search',
-        //     'text' => 'search',
-        // ],
-        // [
-        //     'text' => 'blog',
-        //     'url'  => 'admin/blog',
-        //     'can'  => 'manage-blog',
-        // ],
-        // [
-        //     'text'        => 'pages',
-        //     'url'         => 'admin/pages',
-        //     'icon'        => 'far fa-fw fa-file',
-        //     'label'       => 4,
-        //     'label_color' => 'success',
-        // ],
-        // ['header' => 'account_settings'],
-        
-        
         [
             'text'    => 'Saque',
             'classes' => 'text-white',
@@ -263,7 +242,8 @@ return [
             'icon'    => 'fas fa-fw fa-share',
             'url' => 'transaction/deposit',
             
-        ],[
+        ],
+        [
             'text'    => 'Transações',
             'classes' => 'text-white',
             'icon'    => 'fas fa-fw fa-share',
@@ -274,30 +254,8 @@ return [
             'text'    => 'Histórico',
             'classes' => 'text-white',
             'icon'    => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'Extrato',
-                    'classes' => 'text-white',
-                    'url'  => '#',
-                ]
-            ],
+            'url'     => '#'
         ],
-        // ['header' => 'labels'],
-        // [
-        //     'text'       => 'important',
-        //     'icon_color' => 'red',
-        //     'url'        => '#',
-        // ],
-        // [
-        //     'text'       => 'warning',
-        //     'icon_color' => 'yellow',
-        //     'url'        => '#',
-        // ],
-        // [
-        //     'text'       => 'information',
-        //     'icon_color' => 'cyan',
-        //     'url'        => '#',
-        // ],
     ],
 
     /*
