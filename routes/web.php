@@ -29,5 +29,7 @@ Route::get('transaction/{type}', [TransactionController::class, 'create'])->midd
 Route::post('transaction/{type}', [TransactionController::class, 'store'])->middleware(['auth'])->name('transaction');
 
 Route::get('transfers', [InternalTransferController::class, 'create'])->middleware(['auth'])->name('transfer');
+Route::post('transfers', [InternalTransferController::class, 'store'])->middleware(['auth'])->name('transfer');
+
 
 require __DIR__.'/auth.php';
