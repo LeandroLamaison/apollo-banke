@@ -248,40 +248,27 @@ return [
         //     'label_color' => 'success',
         // ],
         // ['header' => 'account_settings'],
+        
+        
         [
-           
-            'text' => 'Home',
+            'text'    => 'Saque',
             'classes' => 'text-white',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-area-chart',
+            'icon'    => 'fas fa-fw fa-solid fa-share',
+            'url' => 'transaction/withdrawal',
+            
         ],
         [
-            'text' => 'change_password',
+            'text'    => 'Depósito',
             'classes' => 'text-white',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
-        [
+            'icon'    => 'fas fa-fw fa-share',
+            'url' => 'transaction/deposit',
+            
+        ],[
             'text'    => 'Transações',
             'classes' => 'text-white',
             'icon'    => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'Saque',
-                    'classes' => 'text-white',
-                    'url'  => '#',
-                ],
-                [
-                    'text' => 'Depósito',
-                    'classes' => 'text-white',
-                    'url'  => '#',
-                ],
-                [
-                    'text' => 'Transferência',
-                    'classes' => 'text-white',
-                    'url'  => '#',
-                ],
-            ],
+            'url' => 'transfers',
+            
         ],
         [
             'text'    => 'Histórico',
