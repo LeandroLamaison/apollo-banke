@@ -9,16 +9,7 @@
 @section('content')
     <h4>{{ __('main.welcome', ['name' => $data['user']['name']]) }}</h4>
 
-    <x-adminlte-card 
-        class="mt-5 text-xl text-center"
-        title="{{ __('account.available_balance') }}" 
-        theme="lightblue" 
-        theme-mode="outline"
-        icon="fas fa-lg fa-solid fa-money-bill" 
-        header-class="text-uppercase rounded-bottom border-info"
-    >
-        {{ $data['account']['balance'] }}
-    </x-adminlte-card>
+    <x-balance-card :balance="$data['account']['balance']" />
 
     <x-adminlte-card 
         class="mt-5 grid"

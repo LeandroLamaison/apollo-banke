@@ -18,7 +18,15 @@ class TransactionController extends Controller
             return redirect('dashboard');
         }
 
-        return view('add-transaction', ['data' => ['type' => $type]]);
+        $user = Auth::user();
+        $account = Account::where('user_id', $user->id)->first();
+
+        $data = [
+            'type' => $type,
+            'account' => $account,
+        ];
+
+        return view('add-transaction', ['data' => $data]);
     }
 
     public function store (Request $request) {
