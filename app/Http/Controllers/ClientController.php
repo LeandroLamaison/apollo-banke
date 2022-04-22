@@ -38,7 +38,6 @@ class ClientController extends Controller
     }
 
     public function store (Request $request) {
-        echo 'Starting function';
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'cpf' => ['required', 'string', new CPF],
@@ -47,16 +46,10 @@ class ClientController extends Controller
             'city' => ['required', 'string' , 'max:255'],
             'uf' => ['required', 'string', new UF]
         ]);
-        echo 'Validated';
-
         $form = $request->all();
-        echo 'Got form';
 
         $userId = Auth::id();
-        echo 'Got user id';
-
         $newAccount = AccountService::create($form['cpf']);
-        echo 'Account service executed';
 
         DB::beginTransaction();
         try {
@@ -69,7 +62,6 @@ class ClientController extends Controller
                 'city' => $form['city'],
                 'uf' => $form['uf'],
             ]);
-            echo "Client created";
 
             Account::create([
                 'user_id' => $userId,
@@ -77,12 +69,11 @@ class ClientController extends Controller
                 'security_code' => $newAccount['security_code'],
                 'due_date' => $newAccount['due_date'],
             ]);
-            echo "Account created";
             
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            echo 'Transaction throwed';
+            echo json_encode($e);
             throw $e;
         }
 
