@@ -10,6 +10,8 @@ use App\Services\AccountService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+
 class ClientController extends Controller
 {
     public function view () {
@@ -36,6 +38,7 @@ class ClientController extends Controller
     }
 
     public function store (Request $request) {
+        Log::debug('Starting function');
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'cpf' => ['required', 'string', new CPF],
@@ -44,11 +47,17 @@ class ClientController extends Controller
             'city' => ['required', 'string' , 'max:255'],
             'uf' => ['required', 'string', new UF]
         ]);
+        Log::debug('Validated');
 
         $form = $request->all();
+        Log::debug('Got form');
+
         $userId = Auth::id();
+        Log::debug('Got user id');
+
 
         $newAccount = AccountService::create($form['cpf']);
+        Log::debug('Account service executed');
 
         DB::beginTransaction();
         try {
@@ -72,6 +81,7 @@ class ClientController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
+            Log::debug('Transaction throwed');
             throw $e;
         }
 
