@@ -17,12 +17,12 @@ class AccountService {
 
     static private function createCreationDate () {
         $timestamp = time();
-        return date('d-m-y', $timestamp);
+        return date('Y-m-d', $timestamp);
     }
         
     static private function createDueDate () {
         $timestamp = strtotime('+2 years');
-        return date('d-m-y', $timestamp);
+        return date('Y-m-d', $timestamp);
     }
 
     static public function balance(float $oldBalance, float $value, string $transactionType) {
