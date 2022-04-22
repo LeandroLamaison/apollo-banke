@@ -38,7 +38,7 @@ class ClientController extends Controller
     }
 
     public function store (Request $request) {
-        Log::debug('Starting function');
+        echo 'Starting function';
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'cpf' => ['required', 'string', new CPF],
@@ -47,17 +47,16 @@ class ClientController extends Controller
             'city' => ['required', 'string' , 'max:255'],
             'uf' => ['required', 'string', new UF]
         ]);
-        Log::debug('Validated');
+        echo 'Validated';
 
         $form = $request->all();
-        Log::debug('Got form');
+        echo 'Got form';
 
         $userId = Auth::id();
-        Log::debug('Got user id');
-
+        echo 'Got user id';
 
         $newAccount = AccountService::create($form['cpf']);
-        Log::debug('Account service executed');
+        echo 'Account service executed';
 
         DB::beginTransaction();
         try {
@@ -70,18 +69,20 @@ class ClientController extends Controller
                 'city' => $form['city'],
                 'uf' => $form['uf'],
             ]);
-    
+            echo "Client created";
+
             Account::create([
                 'user_id' => $userId,
                 'card_number' => $newAccount['card_number'],
                 'security_code' => $newAccount['security_code'],
                 'due_date' => $newAccount['due_date'],
             ]);
-
+            echo "Account created";
+            
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            Log::debug('Transaction throwed');
+            echo 'Transaction throwed';
             throw $e;
         }
 
