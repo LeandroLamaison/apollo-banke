@@ -14,7 +14,10 @@
                 <!-- The use of this slot is required by the component -->
             </x-slot>
 
-            <x-balance-card :balance="$data['account']['balance']" />
+            <x-balance-card 
+                :title="__('account.available_balance')"
+                :balance="$data['account']['balance']" 
+            />
 
             <!-- Validation Errors -->
             <x-auth-validation-errors class="mb-4" :errors="$errors" />

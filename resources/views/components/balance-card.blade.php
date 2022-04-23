@@ -1,4 +1,4 @@
-@props(['balance'])
+@props(['title', 'balance'])
 
 <x-adminlte-card 
     class="
@@ -9,7 +9,7 @@
         {{ $balance > 0 ? 'text-green' : '' }}
         {{ $balance < 0 ? 'text-red' : '' }}
     "
-    title="{{ __('account.available_balance') }}" 
+    title="{{ $title }}" 
     theme="lightblue" 
     theme-mode="outline"
     icon="fas fa-lg fa-solid fa-money-bill" 

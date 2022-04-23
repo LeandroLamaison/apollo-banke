@@ -10,12 +10,36 @@ use App\Services\AccountService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
+
+
+function sumTotalBalance ($accounts) {
+    $acc = 0;
+
+    for ($i=0; $i < count($accounts); $i++) { 
+        $acc += $accounts[$i]['balance'];
+    }
+
+    return $acc;
+}
 
 class ClientController extends Controller
 {
     public function view () {
         $user = Auth::user();
+
+        if($user['is_admin']) {
+            $accounts = Account::select('balance')->get();
+
+            $globalBalance = sumTotalBalance($accounts);
+
+            $data = [
+                'globalBalance' => $globalBalance
+            ];
+
+            config(['adminlte.layout_topnav' => true]);
+            return view('admin', ['data' => $data]);
+        }
+
         $account = Account::where('user_id', $user->id)->first();
 
         $data = [

@@ -18,9 +18,11 @@ class HasClient
      */
     public function handle(Request $request, Closure $next)
     {
-        $userId = Auth::id();
-        
-        if(Client::where('user_id', $userId)->count() <= 0) {
+        $user = Auth::user();
+
+        $clientsCount = Client::where('user_id', $user['id'])->count();
+
+        if(!$user['is_admin'] && $clientsCount <= 0) {
             return redirect('/client');
         }
 
