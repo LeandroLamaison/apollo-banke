@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use App\Models\Transaction;
+use App\Models\InternalTransfer;
 use App\Rules\TransactionType;
 use App\Services\AccountService;
 use Illuminate\Http\Request;
@@ -27,6 +28,17 @@ class TransactionController extends Controller
         ];
 
         return view('add-transaction', ['data' => $data]);
+    }
+
+    public function view () {
+        $user = Auth::user();
+
+        $account = Account::where('user_id', $user->id)->select('id')->first();
+
+        $dados_transaction = Transaction::where('account_id', $account->id)->select('type','value')->get();
+        $dados_transfer = InternalTransfer::where('sender_account_id', $account->id)->orWhere('recipient_account_id', $account->id)->get();
+
+        return view('historic');
     }
 
     public function store (Request $request) {

@@ -254,7 +254,7 @@ return [
             'text'    => 'Histórico',
             'classes' => 'text-white',
             'icon'    => 'fas fa-fw fa-share',
-            'url'     => '#'
+            'url'     => 'historic'
         ],
     ],
 

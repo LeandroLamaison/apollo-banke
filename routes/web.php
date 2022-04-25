@@ -31,5 +31,7 @@ Route::post('transaction/{type}', [TransactionController::class, 'store'])->midd
 Route::get('transfers', [InternalTransferController::class, 'create'])->middleware(['auth'])->name('transfer');
 Route::post('transfers', [InternalTransferController::class, 'store'])->middleware(['auth'])->name('transfer');
 
+Route::get('historic', [TransactionController::class, 'view'])->middleware(['auth'])->name('historic');
+
 
 require __DIR__.'/auth.php';
