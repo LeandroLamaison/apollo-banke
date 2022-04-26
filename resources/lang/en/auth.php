@@ -21,6 +21,8 @@ return [
     'new_link_message' => 'A new verification link has been sent to the email address you provided during registration.',
     'resent_verification_email' => 'Resend Verification Email',
     'log_out' => 'Log Out',
+    'failed' => 'Incorrect e-mail or password',
+    'form_error' => 'Something hasn\'t inserted correctly'
 ]
 
 ?>

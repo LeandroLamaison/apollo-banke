@@ -21,6 +21,8 @@ return [
     'new_link_message' => 'Um novo link de verificação de email foi enviado para o seu endereço de email.',
     'resent_verification_email' => 'Mandar email de verificação novamente',
     'log_out' => 'Sair',
+    'failed' => 'E-mail ou senha incorretos',
+    'form_error' => 'Algo não foi preenchido corretamente'
 ]
 
 ?>
