@@ -7,6 +7,7 @@ use App\Models\Transaction;
 use App\Models\InternalTransfer;
 use App\Rules\TransactionType;
 use App\Services\AccountService;
+use App\Services\HistoryService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -35,10 +36,22 @@ class TransactionController extends Controller
 
         $account = Account::where('user_id', $user->id)->select('id')->first();
 
-        $dados_transaction = Transaction::where('account_id', $account->id)->select('type','value')->get();
-        $dados_transfer = InternalTransfer::where('sender_account_id', $account->id)->orWhere('recipient_account_id', $account->id)->get();
+        $transfers = InternalTransfer::where('sender_account_id', $account->id)->orWhere('recipient_account_id', $account->id)->get();
+        
+        $dados_transfer = HistoryService::transferToTransaction($account['id'], $transfers);
+        $dados_transaction = Transaction::where('account_id', $account->id)->select('type','value','created_at')->get();
 
-        return view('historic');
+        $history = array_merge($dados_transfer, json_decode(json_encode($dados_transaction), true));
+
+        $dados = [ 
+            'history' => usort($history, function($a, $b) {
+                return !strcmp($a['created_at'], $b['created_at']);
+            })
+        ];
+
+        // echo json_encode($history);
+
+        return view('historic', ['dados' => $dados]);
     }
 
     public function store (Request $request) {
