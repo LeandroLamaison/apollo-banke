@@ -51,7 +51,7 @@ class TransactionController extends Controller
 
         // echo json_encode($history);
 
-        return view('historic', ['dados' => $dados]);
+        return view('historic', ['dados' => $history]);
     }
 
     public function store (Request $request) {
