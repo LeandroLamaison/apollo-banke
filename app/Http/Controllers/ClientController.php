@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use App\Models\Client;
+use App\Models\Transaction;
 use App\Rules\CPF;
 use App\Rules\UF;
 use App\Services\AccountService;
@@ -31,9 +32,11 @@ class ClientController extends Controller
             $accounts = Account::select('balance')->get();
 
             $globalBalance = sumTotalBalance($accounts);
+            $transactions = Transaction::select('type','value', 'account_id', 'created_at')->orderBy('created_at', 'DESC')->get();
 
             $data = [
-                'globalBalance' => $globalBalance
+                'globalBalance' => $globalBalance,
+                'transactions' => $transactions
             ];
 
             config(['adminlte.layout_topnav' => true]);
