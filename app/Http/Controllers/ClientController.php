@@ -12,26 +12,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-
-function sumTotalBalance ($accounts) {
-    $acc = 0;
-
-    for ($i=0; $i < count($accounts); $i++) { 
-        $acc += $accounts[$i]['balance'];
-    }
-
-    return $acc;
-}
-
 class ClientController extends Controller
 {
     public function view () {
         $user = Auth::user();
 
         if($user['is_admin']) {
-            $accounts = Account::select('balance')->get();
-
-            $globalBalance = sumTotalBalance($accounts);
+            $globalBalance = Account::sum('balance');
             $transactions = Transaction::select('type','value', 'account_id', 'created_at')->orderBy('created_at', 'DESC')->get();
 
             $data = [
