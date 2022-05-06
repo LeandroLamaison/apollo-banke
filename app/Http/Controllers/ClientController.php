@@ -16,20 +16,6 @@ class ClientController extends Controller
 {
     public function view () {
         $user = Auth::user();
-
-        if($user['is_admin']) {
-            $globalBalance = Account::sum('balance');
-            $transactions = Transaction::select('type','value', 'account_id', 'created_at')->orderBy('created_at', 'DESC')->get();
-
-            $data = [
-                'globalBalance' => $globalBalance,
-                'transactions' => $transactions
-            ];
-
-            config(['adminlte.layout_topnav' => true]);
-            return view('admin', ['data' => $data]);
-        }
-
         $account = Account::where('user_id', $user->id)->first();
 
         $data = [

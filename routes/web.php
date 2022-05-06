@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\InternalTransferController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
@@ -16,22 +18,30 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return redirect('/dashboard');
+Route::group(['middleware'=> ['auth', 'client']], function () {
+    Route::get('/dashboard', [ClientController::class, 'view'])->name('dashboard');
+    
+    Route::get('/client', [ClientController::class, 'create'])->name('client');
+    Route::post('/client', [ClientController::class, 'store'])->name('client');
+    
+    Route::get('transaction/{type}', [TransactionController::class, 'create'])->name('transaction');
+    Route::post('transaction/{type}', [TransactionController::class, 'store'])->name('transaction');
+    
+    Route::get('transfers', [InternalTransferController::class, 'create'])->name('transfer');
+    Route::post('transfers', [InternalTransferController::class, 'store'])->name('transfer');
+    
+    Route::get('history', [HistoryController::class, 'view'])->name('history');
+
+    Route::get('/', function () {
+        return redirect('/dashboard');
+    });
 });
 
-Route::get('/dashboard', [ClientController::class, 'view'])->middleware(['auth', 'client'])->name('dashboard');
+Route::group(['middleware' => ['auth', 'admin']], function () {
+    Route::get('/admin', [AdminController::class, 'view'])->name('admin');
+});
 
-Route::get('/client', [ClientController::class, 'create']) -> middleware(['auth'])->name('client');
-Route::post('/client', [ClientController::class, 'store']) -> middleware(['auth'])->name('client');
 
-Route::get('transaction/{type}', [TransactionController::class, 'create'])->middleware(['auth'])->name('transaction');
-Route::post('transaction/{type}', [TransactionController::class, 'store'])->middleware(['auth'])->name('transaction');
-
-Route::get('transfers', [InternalTransferController::class, 'create'])->middleware(['auth'])->name('transfer');
-Route::post('transfers', [InternalTransferController::class, 'store'])->middleware(['auth'])->name('transfer');
-
-Route::get('historic', [TransactionController::class, 'view'])->middleware(['auth'])->name('historic');
 
 
 require __DIR__.'/auth.php';

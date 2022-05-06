@@ -3,7 +3,7 @@
 @section('title', 'Apollo Banke')
 
 @section('content_header')
-    <h1>{{ __('transaction.historic') }}</h1>
+    <h1>{{ __('transaction.history') }}</h1>
 @stop
 
 @section('content')

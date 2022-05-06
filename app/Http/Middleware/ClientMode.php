@@ -7,7 +7,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class HasClient
+class ClientMode
 {
     /**
      * Handle an incoming request.
@@ -22,7 +22,11 @@ class HasClient
 
         $clientsCount = Client::where('user_id', $user['id'])->count();
 
-        if(!$user['is_admin'] && $clientsCount <= 0) {
+        if ($user['is_admin']) {
+            return redirect('/admin');
+        }
+
+        if($clientsCount <= 0) {
             return redirect('/client');
         }
 
