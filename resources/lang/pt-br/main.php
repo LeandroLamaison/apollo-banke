@@ -12,7 +12,10 @@ return [
     'dashboard' => 'Dashboard',
     'welcome' => 'Bem vindo, :name',
     'admin_page' => 'Página do Administrador',
-    'total_balance' => 'Saldo Total do Banco'
+    'total_balance' => 'Saldo Total do Banco',
+    'date' => 'Data',
+    'type' => 'Tipo',
+    'value' => 'Valor'
 ]
 
 ?>

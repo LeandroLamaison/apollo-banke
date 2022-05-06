@@ -6,8 +6,11 @@ return [
     'add_withdrawal' => 'Fazer Saque',
     'add_transfer' => 'Fazer Transferência',
     'history' => 'Histórico',
+    'history_transactions' => 'Histórico de Movimentações',
     'value' => 'Valor',
-    'transfer_to' => 'Transferir Para'
+    'transfer_to' => 'Transferir Para',
+    'withdrawal' => 'Saque',
+    'deposit' => 'Depósito'
 ]
 
 ?>

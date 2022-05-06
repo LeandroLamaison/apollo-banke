@@ -11,6 +11,9 @@ return [
     'uf' => "UF",
     'dashboard' => 'Dashboard',
     'welcome' => 'Welcome, :name',
+    'date' => 'Date',
+    'type' => 'Type',
+    'value' => 'Value'
 ]
 
 ?>

@@ -21,16 +21,15 @@ class HistoryController extends Controller
         $dados_transaction = Transaction::where('account_id', $account->id)->select('type','value','created_at')->get();
 
         $history = array_merge($dados_transfer, json_decode(json_encode($dados_transaction), true));
-
-        $dados = [ 
-            'history' => usort($history, function($a, $b) {
-                return !strcmp($a['created_at'], $b['created_at']);
-            })
+        usort($history, function($a, $b) {
+            return strcmp($b['created_at'], $a['created_at']);
+        });
+        
+        $data = [ 
+            'history' => $history
         ];
 
-        // echo json_encode($history);
-
-        return view('history', ['dados' => $history]);
+        return view('history', ['data' => $data]);
     }
 
 }

@@ -12,5 +12,5 @@
         :balance="$data['globalBalance']" 
     />
 
-    <x-history-table :dados="$data['transactions']" :admin="true" ></x-history-table>
+    <x-history-table :history="$data['transactions']" :admin="true" ></x-history-table>
 @stop

@@ -3,17 +3,13 @@
 @section('title', 'Apollo Banke')
 
 @section('content_header')
-    <h1>{{ __('transaction.history') }}</h1>
+    <h1>{{ __('transaction.history_transactions') }}</h1>
 @stop
 
 @section('content')
 
 <div class="card">
-    <div class="card-header">
-        <h3 class="card-title">Histórico de Movimentações</h3>
-    </div>
-
-   <x-history-table :dados="$dados" :admin="false"></x-history-table>
+   <x-history-table :history="$data['history']" :admin="false"></x-history-table>
 </div>
 
 @stop
