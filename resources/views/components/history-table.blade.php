@@ -18,13 +18,13 @@
             <?php foreach($history as $transactions => $transaction){ ?>
                 <tr>
                     <th></th>
-                    <th><?php echo date_format(date_create($transaction['created_at']),"d/m/Y"); ?></th>
+                    <th> {{ $transaction['created_at_text'] }}</th>
                     @if ($admin)
-                    <th><?php echo $transaction['account_id'] ?></th>
+                    <th> {{$transaction['account_id'] }} </th>
                     @endif
-                    <th><?php echo $transaction['type'] == 'deposit' ? __('transaction.deposit') : __('transaction.withdrawal'); ?></th>
+                    <th> {{ $transaction['type_text'] }}</th>
                     <th class="{{ $transaction['type'] == 'deposit' ? 'text-green' : 'text-red'}}">
-                        <?php echo 'R$ ' . number_format($transaction['value'], 2, ',', ''); ?>
+                        {{ $transaction['value_text'] }}
                     </th>
                 </tr>
             <?php } ?>
