@@ -4,7 +4,7 @@ namespace App\Services;
 class HistoryService {
     static private function getTransferType (int $accountId, object $transfer) {
         if ($accountId === $transfer->sender_account_id) {
-            return 'withdraw';
+            return 'withdrawal';
         }
 
         if ($accountId === $transfer->recipient_account_id) {
@@ -35,7 +35,6 @@ class HistoryService {
             $parsedTransactions[$i] = [
                 'type' => $transactions[$i]['type'],
                 'value' => $transactions[$i]['value'],
-                'account_id' => $transactions[$i]['account_id'],
                 'created_at' => $transactions[$i]['created_at'],
 
                 'type_text' => FormatService::transactionType($transactions[$i]['type']),
@@ -60,6 +59,8 @@ class HistoryService {
         usort($history, function($a, $b) {
             return strcmp($b['created_at'], $a['created_at']);
         });
+
+        echo json_encode($history);
 
         return HistoryService::parseTransactions($history);
     }
