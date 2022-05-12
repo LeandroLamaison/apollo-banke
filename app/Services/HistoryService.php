@@ -60,8 +60,6 @@ class HistoryService {
             return strcmp($b['created_at'], $a['created_at']);
         });
 
-        echo json_encode($history);
-
         return HistoryService::parseTransactions($history);
     }
 }

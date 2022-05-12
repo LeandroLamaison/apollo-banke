@@ -226,32 +226,49 @@ return [
 
     'menu' => [
         [
+            'text' => '',
+            'topnav_right' => true,
+            'icon' => 'fas fa-fw fa-g fa-globe',
+            'submenu' => [
+                [
+                    'text'=> 'lang_english',
+                    'icon' => 'fas fa-fw fa-g fa-flag',
+                    'url' => 'set-locale/en',
+                ],
+                [
+                    'text'=> 'lang_portuguese',
+                    'icon' => 'fas fa-fw fa-g fa-flag',
+                    'url' => 'set-locale/pt-br'
+                ]
+            ]
+        ],        
+        [
             'type'         => 'fullscreen-widget',
             'topnav_right' => true,
         ],
         [
-            'text'    => 'Saque',
+            'text'    => 'transaction_withdraw',
             'classes' => 'text-white',
             'icon'    => 'fas fa-fw fa-solid fa-share',
             'url' => 'transaction/withdrawal',
             
         ],
         [
-            'text'    => 'Depósito',
+            'text'    => 'transaction_deposit',
             'classes' => 'text-white',
             'icon'    => 'fas fa-fw fa-share',
             'url' => 'transaction/deposit',
             
         ],
         [
-            'text'    => 'Transações',
+            'text'    => 'transaction_transfer',
             'classes' => 'text-white',
             'icon'    => 'fas fa-fw fa-share',
             'url' => 'transfers',
             
         ],
         [
-            'text'    => 'Histórico',
+            'text'    => 'history',
             'classes' => 'text-white',
             'icon'    => 'fas fa-fw fa-share',
             'url'     => 'history'

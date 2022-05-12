@@ -54,13 +54,14 @@ class Kernel extends HttpKernel
      * @var array<string, class-string|string>
      */
     protected $routeMiddleware = [
+        'admin' => \App\Http\Middleware\AdminMode::class,
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'client' => \App\Http\Middleware\ClientMode::class,
-        'admin' => \App\Http\Middleware\AdminMode::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'locale' => \App\Http\Middleware\Locale::class,
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
