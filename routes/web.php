@@ -19,11 +19,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::group(['middleware'=> ['auth', 'client', 'locale']], function () {
     Route::get('/dashboard', [ClientController::class, 'view'])->name('dashboard');
-    
-    Route::get('/client', [ClientController::class, 'create'])->name('client');
-    Route::post('/client', [ClientController::class, 'store'])->name('client');
     
     Route::get('/transaction/{type}', [TransactionController::class, 'create'])->name('transaction');
     Route::post('/transaction/{type}', [TransactionController::class, 'store'])->name('transaction');
@@ -37,6 +35,14 @@ Route::group(['middleware'=> ['auth', 'client', 'locale']], function () {
         return redirect('/dashboard');
     });
 });
+
+Route::group(['middleware'=> ['auth', 'locale']], function () {
+    Route::get('/client', [ClientController::class, 'create'])->name('client');
+    Route::post('/client', [ClientController::class, 'store'])->name('client'); 
+});
+
+
+
 
 Route::group(['middleware' => ['auth', 'admin', 'locale']], function () {
     Route::get('/admin', [AdminController::class, 'view'])->name('admin');
