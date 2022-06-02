@@ -21,5 +21,12 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('WUsZ6kwdZ'),
             'is_admin' => true,
         ]);
+
+        User::create([
+            'name' => 'Artêmis Bank',
+            'email' => 'admin@artemis.com',
+            'password' => Hash::make('x7v02KMvQu'),
+            'is_bank' => true,
+        ]);
     }
 }
