@@ -16,11 +16,10 @@ return new class extends Migration
         Schema::create('external_transfers', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->integer('sender_bank_id');
-            $table->integer('recipient_bank_id');
-            $table->integer('sender_card_number');
-            $table->integer('recipient_card_number');
-            $table->float('value');
+            $table->integer('sender_bank_id')->nullable();
+            $table->integer('recipient_bank_id')->nullable();
+            $table->string('sender_card_number');
+            $table->string('recipient_card_number');
             $table->float('value');
 
             $table
