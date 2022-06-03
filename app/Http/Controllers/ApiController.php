@@ -72,6 +72,23 @@ class ApiController extends Controller
     }
 
     public function load(Request $request) {
-        return response()->json('Load', 200);
+        $request->validate([
+            'senderCardNumber' => ['required', 'string'],
+        ]);
+        $form = $request->all();
+
+        $senderBankId = Auth::id();
+
+        $filter = [
+            'sender_bank_id' => $senderBankId,
+            'sender_card_number' => $form['senderCardNumber'],
+        ];
+
+        $transfers = ExternalTransfer::where($filter)->orderBy('created_at', 'desc')->get();
+        $response = [
+            'success' => true,
+            'data'    => $transfers,
+        ];
+        return response()->json($response, 200);
     }
 }
