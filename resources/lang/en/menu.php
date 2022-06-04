@@ -6,7 +6,8 @@ return [
     'transaction_withdraw' => 'Withdraw',
     'transaction_deposit' => 'Deposit',
     'transaction_transfer' => 'Transfer',
-    'history' => 'History'
+    'history' => 'History',
+    'interbank_transfer' => 'Interbank'
 ]
 
 ?>

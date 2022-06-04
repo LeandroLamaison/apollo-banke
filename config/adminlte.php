@@ -268,6 +268,13 @@ return [
             
         ],
         [
+            'text'    => 'interbank_transfer',
+            'classes' => 'text-white',
+            'icon'    => 'fas fa-fw fa-share',
+            'url' => 'external-transfers',
+            
+        ],
+        [
             'text'    => 'history',
             'classes' => 'text-white',
             'icon'    => 'fas fa-fw fa-share',

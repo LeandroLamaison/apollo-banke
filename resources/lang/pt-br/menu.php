@@ -6,7 +6,8 @@ return [
     'transaction_withdraw' => 'Saque',
     'transaction_deposit' => 'Depósito',
     'transaction_transfer' => 'Transferência',
-    'history' => 'Histórico'
+    'history' => 'Histórico',
+    'interbank_transfer' => 'Interbancário'
 ]
 
 ?>

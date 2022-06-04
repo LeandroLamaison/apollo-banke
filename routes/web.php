@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ExternalTransferController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\InternalTransferController;
 use App\Http\Controllers\LocaleController;
@@ -28,6 +29,9 @@ Route::group(['middleware'=> ['auth', 'client', 'locale']], function () {
     
     Route::get('/transfers', [InternalTransferController::class, 'create'])->name('transfer');
     Route::post('/transfers', [InternalTransferController::class, 'store'])->name('transfer');
+
+    Route::get('/external-transfers', [ExternalTransferController::class, 'create'])->name('external-trasnfer');
+    Route::post('/external-transfers', [ExternalTransferController::class, 'store'])->name('external-trasnfer');
     
     Route::get('/history', [HistoryController::class, 'view'])->name('history');
 
