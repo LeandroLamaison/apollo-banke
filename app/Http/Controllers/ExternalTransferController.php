@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Account;
-use App\Models\Client;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,6 +15,7 @@ class ExternalTransferController extends Controller
             ->first();
 
         $banks = User::where(['is_bank' => true])
+            ->where('email', '!=', env('BANK_MAIL'))
             ->select('id', 'name')
             ->orderBy('name', 'asc')
             ->get();

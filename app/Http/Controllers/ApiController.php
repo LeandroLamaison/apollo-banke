@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use App\Models\ExternalTransfer;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -52,11 +53,14 @@ class ApiController extends Controller
             return response()->json($response, 403);
         }
 
+        $recipientBank= User::where(['email' => env('BANK_MAIL')])->select('id')->first();
+
         $senderBankId = Auth::id();
+        $recipientBankId = $recipientBank['id'];
 
         $newExternalTransfer = [
             'sender_bank_id' => $senderBankId,
-            'recipient_bank_id' => null,
+            'recipient_bank_id' => $recipientBankId,
             'sender_card_number' => $form['senderCardNumber'],
             'recipient_card_number' => $form['recipientCardNumber'],
             'value' => $form['value']

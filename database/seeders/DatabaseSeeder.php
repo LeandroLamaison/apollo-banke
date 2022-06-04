@@ -21,10 +21,17 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('WUsZ6kwdZ'),
             'is_admin' => true,
         ]);
+        
+        User::create([
+            'name' => 'Apollo Bank',
+            'email' => 'apollo@bank.com',
+            'password' => Hash::make('8s8qjbOBkm'),
+            'is_bank' => true,
+        ]);
 
         User::create([
             'name' => 'Artêmis Bank',
-            'email' => 'admin@artemis.com',
+            'email' => 'artemis@bank.com',
             'password' => Hash::make('x7v02KMvQu'),
             'is_bank' => true,
         ]);
