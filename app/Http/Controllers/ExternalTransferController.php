@@ -9,6 +9,7 @@ use App\Services\AccountService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http as FacadesHttp;
 use Illuminate\Support\Facades\Lang;
 
 class ExternalTransferController extends Controller
@@ -74,7 +75,7 @@ class ExternalTransferController extends Controller
         ];
 
         try {
-            ExternalTransferController::call($newTransfer);
+            ExternalTransferController::callApi($recipientBank['email'], $newTransfer);
         } catch (\Exception $e) {
             return abort(404, Lang::get('validation.transfer'));
         }
@@ -96,7 +97,39 @@ class ExternalTransferController extends Controller
         return redirect('dashboard');
     }
 
-    private function call($newTransfer) {
 
+    private function callApi($bank, $newTransfer) {
+        if ($bank !== env('TWIN_BANK_MAIL')) {
+            return abort(404, Lang::get('validation.transfer'));
+        }
+
+        return ExternalTransferController::callTwinBank($newTransfer);
+    }
+
+    private function callTwinBank($newTransfer) {
+        $url = env('TWIN_BANK_API_URL');
+
+        $loginData = FacadesHttp::post($url.'/login', [
+            'email' => env('TWIN_BANK_API_MAIL'),
+            'password' => env('TWIN_BANK_API_PASSWORD')
+        ])->json();
+        $token = $loginData['data']['token'];
+
+        if (!$token) {
+            return abort(404, Lang::get('validation.transfer'));
+        }
+
+        $response = FacadesHttp::withHeaders([
+            'Content-Type' => 'application/json',
+            'authorization' => 'Bearer ' . $token
+        ])->post($url, json_encode([
+            "senderCardNumber" => $newTransfer['sender_card_number'],
+            "recipientCardNumber" => $newTransfer['recipient_card_number'],
+            "value" => $newTransfer['value']
+        ]));
+
+        if(!$response['sucess']) {
+            return abort(404, Lang::get('validation.transfer'));
+        }
     }
 }
