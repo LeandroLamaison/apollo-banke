@@ -86,7 +86,7 @@ class InternalTransferController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            return abort(404, Lang::get('validation.transfer'));
+            throw $e;
         }
         
         return redirect('dashboard');

@@ -6,6 +6,7 @@ use App\Models\Account;
 use App\Models\ExternalTransfer;
 use App\Models\User;
 use App\Services\AccountService;
+use ErrorException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -47,8 +48,7 @@ class ExternalTransferController extends Controller
         ->first();
 
         if(!$recipientBank) {
-            dd($form);
-            return abort(404, Lang::get('validation.valid_bank'));
+            throw new ErrorException(Lang::get('validation.valid_bank'));
         }
 
         $senderBank = User::where(['is_bank' => true, 'email' => env('BANK_MAIL')])
@@ -77,7 +77,7 @@ class ExternalTransferController extends Controller
         try {
             ExternalTransferController::callApi($recipientBank['email'], $newTransfer);
         } catch (\Exception $e) {
-            return abort(404, Lang::get('validation.transfer'));
+            throw $e;
         }
 
         DB::beginTransaction();
@@ -90,8 +90,7 @@ class ExternalTransferController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            dd($e);
-            return abort(404, Lang::get('validation.transfer'));
+            throw $e;
         }
 
         return redirect('dashboard');
@@ -100,7 +99,7 @@ class ExternalTransferController extends Controller
 
     private function callApi($bank, $newTransfer) {
         if ($bank !== env('TWIN_BANK_MAIL')) {
-            return abort(404, Lang::get('validation.transfer'));
+            throw new ErrorException(Lang::get('validation.transfer'));
         }
 
         return ExternalTransferController::callTwinBank($newTransfer);
@@ -113,23 +112,23 @@ class ExternalTransferController extends Controller
             'email' => env('TWIN_BANK_API_MAIL'),
             'password' => env('TWIN_BANK_API_PASSWORD')
         ])->json();
-        $token = json_decode($loginData['data'])['token'];
 
-        if (!$token) {
-            return abort(404, Lang::get('validation.transfer'));
+
+        if (!is_array($loginData['data']) || !$loginData['data']['token']) {
+            throw new ErrorException(Lang::get('validation.transfer'));
         }
 
         $response = FacadesHttp::withHeaders([
             'Content-Type' => 'application/json',
-            'authorization' => 'Bearer ' . $token
-        ])->post($url, json_encode([
+            'authorization' => 'Bearer ' . $loginData['data']['token']
+        ])->post($url.'/transfer', [
             "senderCardNumber" => $newTransfer['sender_card_number'],
             "recipientCardNumber" => $newTransfer['recipient_card_number'],
             "value" => $newTransfer['value']
-        ]))->json();
+        ])->json();
 
-        if(!$response['success']) {
-            return abort(404, Lang::get('validation.transfer'));
+        if(!is_array($response) || !$response['success']) {
+            throw new ErrorException(Lang::get('validation.transfer'));
         }
     }
 }
