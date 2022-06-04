@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Apollo Banke')
+@section('title',  env('BANK_NAME', 'Apollo') . ' Bank')
 
 @section('content_header')
     <h1>{{ __('transaction.history_transactions') }}</h1>
