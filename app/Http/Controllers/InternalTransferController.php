@@ -11,6 +11,7 @@ use App\Services\AccountService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Lang;
 
 class InternalTransferController extends Controller
 {
@@ -85,7 +86,7 @@ class InternalTransferController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            return abort(404, Lang::get('validation.transfer'));
         }
         
         return redirect('dashboard');

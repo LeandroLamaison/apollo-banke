@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Account;
 use App\Models\ExternalTransfer;
 use App\Models\User;
+use App\Services\AccountService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ApiController extends Controller
 {
@@ -43,8 +45,11 @@ class ApiController extends Controller
         ]);
         $form = $request->all();
 
-        $account = Account::where(['card_number' => $form['recipientCardNumber']])->first();
-        if (!$account) {
+        $recipientAccount = Account::where(['card_number' => $form['recipientCardNumber']])
+            ->select('card_number', 'balance')
+            ->first();
+            
+        if (!$recipientAccount) {
             $response = [
                 'success' => false,
                 'data'    => ['recipientCardNumber' => $form['recipientCardNumber']],
@@ -58,21 +63,45 @@ class ApiController extends Controller
         $senderBankId = Auth::id();
         $recipientBankId = $recipientBank['id'];
 
-        $newExternalTransfer = [
+        $newRecipientBalance = AccountService::balance(
+            $recipientAccount['balance'], 
+            $form['value'], 
+            'deposit'
+        );
+
+        $newTransfer = [
             'sender_bank_id' => $senderBankId,
             'recipient_bank_id' => $recipientBankId,
             'sender_card_number' => $form['senderCardNumber'],
             'recipient_card_number' => $form['recipientCardNumber'],
             'value' => $form['value']
         ];
-        $responseData = ExternalTransfer::create($newExternalTransfer);
+        
+        DB::beginTransaction();
+        try {
+            $responseData = ExternalTransfer::create($newTransfer);
+            
+            Account::where(['card_number' => $newTransfer['recipient_card_number']])
+                ->update(['balance' => $newRecipientBalance]);
 
-        $response = [
-            'success' => true,
-            'data'    => $responseData,
-            'message' => 'Transference ocurred successfully',
-        ];
-        return response()->json($response, 200);
+            DB::commit();
+
+            $response = [
+                'success' => true,
+                'data'    => $responseData,
+                'message' => 'Transference ocurred successfully',
+            ];
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            $response = [
+                'success' => false,
+                'data'    => 'Error',
+                'message' => 'Internal Server Error' ,
+            ];
+            return response()->json($response, 500);
+        }
     }
 
     public function load(Request $request) {

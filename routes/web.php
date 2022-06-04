@@ -20,7 +20,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 Route::group(['middleware'=> ['auth', 'client', 'locale']], function () {
     Route::get('/dashboard', [ClientController::class, 'view'])->name('dashboard');
     
@@ -30,8 +29,8 @@ Route::group(['middleware'=> ['auth', 'client', 'locale']], function () {
     Route::get('/transfers', [InternalTransferController::class, 'create'])->name('transfer');
     Route::post('/transfers', [InternalTransferController::class, 'store'])->name('transfer');
 
-    Route::get('/external-transfers', [ExternalTransferController::class, 'create'])->name('external-trasnfer');
-    Route::post('/external-transfers', [ExternalTransferController::class, 'store'])->name('external-trasnfer');
+    Route::get('/external-transfers', [ExternalTransferController::class, 'create'])->name('external-transfer');
+    Route::post('/external-transfers', [ExternalTransferController::class, 'store'])->name('external-transfer');
     
     Route::get('/history', [HistoryController::class, 'view'])->name('history');
 
@@ -44,8 +43,6 @@ Route::group(['middleware'=> ['auth', 'locale']], function () {
     Route::get('/client', [ClientController::class, 'create'])->name('client');
     Route::post('/client', [ClientController::class, 'store'])->name('client'); 
 });
-
-
 
 
 Route::group(['middleware' => ['auth', 'admin', 'locale']], function () {
