@@ -113,7 +113,7 @@ class ExternalTransferController extends Controller
             'email' => env('TWIN_BANK_API_MAIL'),
             'password' => env('TWIN_BANK_API_PASSWORD')
         ])->json();
-        $token = $loginData['data']['token'];
+        $token = json_decode($loginData['data'])['token'];
 
         if (!$token) {
             return abort(404, Lang::get('validation.transfer'));
@@ -126,9 +126,9 @@ class ExternalTransferController extends Controller
             "senderCardNumber" => $newTransfer['sender_card_number'],
             "recipientCardNumber" => $newTransfer['recipient_card_number'],
             "value" => $newTransfer['value']
-        ]));
+        ]))->json();
 
-        if(!$response['sucess']) {
+        if(!$response['success']) {
             return abort(404, Lang::get('validation.transfer'));
         }
     }
