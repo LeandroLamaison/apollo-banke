@@ -2,7 +2,7 @@
 namespace App\Services;
 
 class HistoryService {
-    static private function getTransferType (int $accountId, object $transfer) {
+    static private function getInternalTransferType (int $accountId, object $transfer) {
         if ($accountId === $transfer->sender_account_id) {
             return 'withdrawal';
         }
@@ -14,12 +14,45 @@ class HistoryService {
         return null;
     }
 
-    static private function transferToTransaction (int $accountId, object $transfers) {
+    static private function getExternalTransferType (int $bankId, ?string $cardNumber, object $transfer) {
+        if (
+            $bankId === $transfer->sender_bank_id && 
+            ($cardNumber === null || $cardNumber === $transfer->sender_card_number)
+        ) {
+            return 'withdrawal';
+        }
+
+        if (
+            $bankId === $transfer->receiver_bank_id && 
+            ($cardNumber === null || $cardNumber === $transfer->recipient_card_number)
+        ) {
+            return 'deposit';
+        }
+
+        return null;
+    }
+
+
+    static private function internalTransferToTransaction (int $accountId, object $transfers) {
         $transactions = [];
 
         for ($i=0; $i < count($transfers); $i++) {     
             $transactions[$i] = [
-              'type' => HistoryService::getTransferType($accountId, $transfers[$i]),
+              'type' => HistoryService::getInternalTransferType($accountId, $transfers[$i]),
+              'value' => $transfers[$i]->value,
+              'created_at' => $transfers[$i]->created_at
+            ];
+        }
+
+        return $transactions;
+    }
+
+    static private function externalTransferToTransaction (int $bankId, ?string $cardNumber, object $transfers) {
+        $transactions = [];
+
+        for ($i=0; $i < count($transfers); $i++) {     
+            $transactions[$i] = [
+              'type' => HistoryService::getExternalTransferType($bankId, $cardNumber, $transfers[$i]),
               'value' => $transfers[$i]->value,
               'created_at' => $transfers[$i]->created_at
             ];
@@ -46,16 +79,36 @@ class HistoryService {
         return $parsedTransactions;
     }
 
-    static public function buildHistory (object $transactions , ?object $transfers, ?int $accountId) {
-        $transferTransactions = [];
+    static public function buildHistory (
+        object $transactions , 
+        ?object $internalTransfers, 
+        ?object $externalTransfers, 
+        ?object $account,
+        ?int $bankId
+    ) {
+        $internalTransferTransactions = [];
+        $externalTransferTransactions = [];
 
-        if ($transfers && $accountId) {
-           $transferTransactions = HistoryService::transferToTransaction($accountId, $transfers);
+        if($account && $internalTransfers) {
+            $internalTransferTransactions = HistoryService::internalTransferToTransaction(
+                $account['id'], 
+                $internalTransfers
+            );
         }
 
+        if($bankId && $externalTransfers) {
+            $externalTransferTransactions = HistoryService::externalTransferToTransaction(
+                $bankId,
+                $account ? $account['card_number'] : null,
+                $externalTransfers
+            );
+        }
+
+        dd($externalTransfers, $account, $bankId);
         $transactions = json_decode(json_encode($transactions), true);
 
-        $history = array_merge($transferTransactions, $transactions);
+        $history = array_merge($transactions, $internalTransferTransactions, $externalTransferTransactions);
+        
         usort($history, function($a, $b) {
             return strcmp($b['created_at'], $a['created_at']);
         });
