@@ -35,5 +35,12 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('x7v02KMvQu'),
             'is_bank' => true,
         ]);
+
+        User::create([
+            'name' => 'Unix Bank',
+            'email' => 'unix@bank.com',
+            'password' => Hash::make('j7Ya9Hj6G'),
+            'is_bank' => true,
+        ]);
     }
-}
+}  
