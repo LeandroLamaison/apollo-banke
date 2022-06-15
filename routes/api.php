@@ -16,6 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', [ApiController::class, 'login']);
 
 Route::group(['middleware'=> ['auth:sanctum']], function () {
-    Route::get('/transfer', [ApiController::class, 'load']);
+    Route::get('/transfer', [ApiController::class, 'get']);
     Route::post('/transfer', [ApiController::class, 'post']); 
 });

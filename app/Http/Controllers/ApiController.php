@@ -104,9 +104,9 @@ class ApiController extends Controller
         }
     }
 
-    public function load(Request $request) {
+    public function get(Request $request) {
         $request->validate([
-            'senderCardNumber' => ['required', 'string'],
+            'id' => ['required', 'number'],
         ]);
         $form = $request->all();
 
@@ -114,13 +114,14 @@ class ApiController extends Controller
 
         $filter = [
             'sender_bank_id' => $senderBankId,
-            'sender_card_number' => $form['senderCardNumber'],
+            'id' => $form['id'],
         ];
 
-        $transfers = ExternalTransfer::where($filter)->orderBy('created_at', 'desc')->get();
+        $transfer = ExternalTransfer::where($filter)->first();
+
         $response = [
             'success' => true,
-            'data'    => $transfers,
+            'data'    => $transfer,
         ];
         return response()->json($response, 200);
     }
